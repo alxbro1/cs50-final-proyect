@@ -1,0 +1,102 @@
+.inputWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.inputWithIconG {
+  position: relative;
+  width: 100%;
+  flex: auto;
+  input {
+    border-radius: 25px;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0.5rem 1rem 0.5rem 2.5rem;
+    font-size: 16px;
+    border: none;
+    font-family: "Catamaran", sans-serif;
+  }
+
+  input::placeholder{
+    font-weight: 600;
+  }
+}
+
+.inputWithIconV {
+  position: relative;
+  width: 100%;
+  flex: auto;
+  input {
+    border-radius: 25px;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0.5rem 1rem 0.5rem 2.5rem;
+    font-size: 16px;
+    border: none;
+    font-family: "Catamaran", sans-serif;
+  }
+
+  input::placeholder{
+    font-weight: 600;
+  }
+}
+
+.inputWithIconG::before {
+  content: '';
+  position: absolute;
+  top: 0px; 
+  left: 0px; 
+  right: 0px;
+  bottom: 0px;
+  background: linear-gradient(180deg, #00d9b2, #0097ca);
+  border-radius: 25px;
+  z-index: -1;
+  filter: blur(5px); 
+  opacity: 0.9; 
+}
+
+.inputWithIconV::before {
+  content: '';
+  position: absolute;
+  top: 0px; 
+  left: 0px; 
+  right: 0px;
+  bottom: 0px;
+  background: linear-gradient(180deg, #7242ff, #9875fe);
+  border-radius: 25px;
+  z-index: -1;
+  filter: blur(5px); 
+  opacity: 0.9; 
+}
+
+.icon {
+  position: absolute;
+  left: 10px;
+  top: 55%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  display: inline-block;
+  font-size: 1.5rem;
+}
+.inputError {
+  border-color: red;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #555;
+  cursor: pointer;
+  user-select: none;
+}
+
+.error {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
