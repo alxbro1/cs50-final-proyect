@@ -4,7 +4,7 @@ import {
   checkSessionSchema,
   loginSchema,
   registerSchema,
-} from "../schema/session/loggin";
+} from "../schema/session/session";
 
 export default class AuthController {
   static async login(req: Request, res: Response) {

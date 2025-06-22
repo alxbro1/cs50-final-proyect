@@ -1,4 +1,4 @@
-import { CheckSessionSchema, LoginSchema, RegisterSchema } from "../schema/session/loggin";
+import { CheckSessionSchema, LoginSchema, RegisterSchema } from "../schema/session/session";
 
 export default class SessionService {
   static async login(data: LoginSchema) {
