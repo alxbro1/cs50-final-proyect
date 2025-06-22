@@ -1,22 +1,31 @@
 import { Formik, Field, Form } from "formik";
-import { validationRegisterForm } from "../../helpers/validateRegister";
+import { validationRegisterForm, type RegisterFormValues } from "../../helpers/validateRegister";
 import { sendRegisterData } from "../../helpers/sendRegisterData";
 import { InputWithIcon } from "../../components/Input/Input";
 import {
   FaUser,
   FaRegUser,
-  FaCalendarAlt,
-  FaIdCard,
   FaEnvelope,
   FaKey,
 } from "react-icons/fa";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import styles from "./index.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useScreenSize } from "../../hooks/screenSize";
 
 export const RegisterForm = () => {
     const { width } = useScreenSize();
+    const navigate = useNavigate();
+
+    const handleSubmit = (data: RegisterFormValues) => {
+      sendRegisterData(data)
+        .then(() => {
+          navigate("/login");
+        })
+        .catch((error) => {
+          console.error("Registration failed:", error);
+        });
+    };
 
   return (
     <div className={styles.container}>
@@ -36,7 +45,7 @@ export const RegisterForm = () => {
             nDni: 0,
             birthdate: "",
           }}
-          onSubmit={sendRegisterData}
+          onSubmit={handleSubmit}
           validate={validationRegisterForm}>
           {({ isSubmitting }) => (
             <Form>
@@ -47,32 +56,6 @@ export const RegisterForm = () => {
                 placeholder="Name Username"
                 gradientColor1="#9c7bfe"
                 gradientColor2="#7141ff"
-                component={InputWithIcon}
-                color={true}
-                required
-              />
-
-              <Field
-                icon={FaCalendarAlt}
-                gradientColor1="#9c7bfe"
-                gradientColor2="#7141ff"
-                type="date"
-                name="birthdate"
-                placeholder="AAAA-MM-DD"
-                component={InputWithIcon}
-                color={true}
-                required
-              />
-
-              <Field
-                placeholderColor="violet"
-                gradientColor1="#9c7bfe"
-                gradientColor2="#7141ff"
-                icon={FaIdCard}
-                type="number"
-                value={null}
-                name="nDni"
-                placeholder="ID Number"
                 component={InputWithIcon}
                 color={true}
                 required

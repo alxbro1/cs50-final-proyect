@@ -4,7 +4,7 @@ import type { RegisterFormValues } from "./validateRegister";
 export const sendRegisterData = async (data: RegisterFormValues) => {
   try {
     const res = await axios.post(
-      "https://appoinments-system-backend.vercel.app/users/register",
+      `${import.meta.env.VITE_API_URL}/session/register`,
       data
     );
     return res;

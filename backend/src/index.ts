@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import path from "path";
 import cors from "cors";
+import session from "./routes/session";
 
 dotenv.config();
 
@@ -24,7 +25,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/public", express.static(path.join(__dirname, "../public")));
-
+app.use("/session", session);
 app.use(
   (
     err: any,

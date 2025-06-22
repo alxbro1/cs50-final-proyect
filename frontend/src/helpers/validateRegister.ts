@@ -1,7 +1,5 @@
 const namePattern = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]{1,50}$/;
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const birthdatePattern = /^\d{4}-\d{2}-\d{2}$/;
-const dniPattern = /^\d{8}$/;
 const passwordPattern = /^.{5,30}$/;
 const usernamePattern = /^[A-Za-z0-9_]{5,30}$/;
 
@@ -11,8 +9,6 @@ export interface RegisterFormValues {
   password: string;
   confirmPassword: string;
   email: string;
-  nDni: number | string;
-  birthdate: string;
 }
 
 export const validationRegisterForm = ({
@@ -21,8 +17,6 @@ export const validationRegisterForm = ({
   password,
   confirmPassword,
   email,
-  nDni,
-  birthdate,
 }: RegisterFormValues) => {
   const error: { [key: string]: string } = {};
 
@@ -39,18 +33,6 @@ export const validationRegisterForm = ({
       value: email,
       pattern: emailPattern,
       errorMsg: "Invalid email format",
-    },
-    {
-      key: "birthdate",
-      value: birthdate,
-      pattern: birthdatePattern,
-      errorMsg: "Birthdate must be in ISO format and not in the future",
-    },
-    {
-      key: "nDni",
-      value: nDni.toString(),
-      pattern: dniPattern,
-      errorMsg: "DNI must be an 8-digit number",
     },
     {
       key: "password",
