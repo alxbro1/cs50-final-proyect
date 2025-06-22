@@ -6,21 +6,16 @@ interface LogInData {
 }
 
 interface User {
-    id: string;
+    id?: string;
     name: string;
     email: string;
     role: string;
 }
 
-interface LoginResponse {
-    data: User;
-    token: string;
-}
-
-export const sendLogInData = async (data: LogInData): Promise<LoginResponse> => {
+export const sendLogInData = async (data: LogInData): Promise<User> => {
     try {
         const result = await axios.post(
-            `${import.meta.env.VITE_API_URL}/users/login`,
+            `${import.meta.env.VITE_API_URL}/session/login`,
             data
         );
      

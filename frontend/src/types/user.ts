@@ -1,12 +1,12 @@
 type User = {
-  id: string;
+  id?: string;
   isVerified?: boolean;
   appointments?: Array<{
-    id: string;
-    date: string;
-    time: string;
-    service: string;
-    status: string;
-  }>;       
+    id?: string;
+    date?: string;
+    time?: string;
+    service?: string;
+    status?: string;
+  }>;
 };
 export type { User };

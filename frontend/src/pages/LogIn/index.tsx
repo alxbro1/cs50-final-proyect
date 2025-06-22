@@ -11,7 +11,6 @@ import { InputWithIcon } from "../../components/Input/Input";
 import { FaUser } from "react-icons/fa";
 import { RiLock2Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
 import type { User } from "../../types/user";
 
 export const LoggInForm = () => {
@@ -31,39 +30,17 @@ export const LoggInForm = () => {
           initialValues={{ email: "", password: "" }}
           validate={validateLoginForm}
           onSubmit={async (values) => {
-            Swal.fire({
-              title: "Waiting for server ...",
-              icon: "info",
-              showConfirmButton: false,
-              allowOutsideClick: false,
-              customClass:{
-                popup: styles.alertContainer
-              }
-            });
 
             try {
               const data: User = await sendLogInData(values);
-              console.log(data.isVerified)
               if (data.id && !data.isVerified) throw Error("User is not verified");
-                Swal.update({
-                  title: "LogIn succesfuly",
-                  icon: "success",
-                  allowOutsideClick: true,
-                });
               setTimeout(() => {
                 dispatch(loginUser(data));
                 dispatch(addAppointments(data.appointments));
                 navigate("/");
-                Swal.close()
               }, 2000);
             } catch (err) {
-              const errorMessage = err instanceof Error ? err.message : "An unknown error occurred";
-              Swal.update({
-                title: errorMessage,
-                icon: "error",
-                allowOutsideClick: true,
-                showCloseButton: true,
-              });
+              console.error("Login failed:", err);
             }
           }}>
           <Form className={styles.formulary}>
