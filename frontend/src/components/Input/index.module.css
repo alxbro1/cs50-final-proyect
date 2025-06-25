@@ -54,7 +54,7 @@
   background: linear-gradient(180deg, #00d9b2, #0097ca);
   border-radius: 25px;
   z-index: -1;
-  filter: blur(5px); 
+  filter: blur(2px); 
   opacity: 0.9; 
 }
 
@@ -68,7 +68,7 @@
   background: linear-gradient(180deg, #7242ff, #9875fe);
   border-radius: 25px;
   z-index: -1;
-  filter: blur(5px); 
+  filter: blur(2px); 
   opacity: 0.9; 
 }
 
@@ -99,4 +99,44 @@
   color: red;
   font-size: 0.875rem;
   margin-top: 0.25rem;
+}
+
+.inputWithIconG select,
+.inputWithIconV select {
+  border-radius: 25px;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.5rem 1rem 0.5rem 2.5rem;
+  font-size: 16px;
+  border: none;
+  font-family: "Catamaran", sans-serif;
+  background: transparent;
+  appearance: none;
+  outline: none;
+}
+
+.inputWithIconG select:disabled,
+.inputWithIconV select:disabled {
+  background: #f0f0f0;
+  color: #aaa;
+}
+
+.inputWithIconG select option,
+.inputWithIconV select option {
+  color: #222;
+  background: #fff;
+  font-weight: 600;
+}
+
+/* Opcional: flecha personalizada para el select */
+.inputWithIconG::after,
+.inputWithIconV::after {
+  content: "▼";
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #888;
+  font-size: 1rem;
 }

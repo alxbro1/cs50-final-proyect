@@ -31,32 +31,8 @@ button::before {
   opacity: 0.9;
 }
 }
-.containerRight {
-  width: 100%;
-  min-height: 100%;
-
-  padding: 3rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  background: linear-gradient(-25deg, #9c7bfe 0%, #7141ff 95%);
-  border-radius:  40px 0 0 40px;
-  
-  h1{
-    margin-top: 1rem;
-    color:whitesmoke;
-    font-size: 2.5rem;
-    text-align: center;
-  }
-
-  p{
-    margin-top: 1rem;
-    text-align: center;
-    text-justify: inherit;
-    color: white;
-  }
+button:hover {
+  cursor: pointer;
 }
 .containerForm {
   width: 100%;
@@ -83,45 +59,6 @@ button::before {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
-}
-
-.logotypeContainer {
-  max-height: 6rem;
-  display: flex;
-  box-sizing: border-box;
-  position: absolute;
-  top: 30px;
-  align-items: center;
-  justify-content: center;
-
-  h2 {
-    margin-left: 0.5rem;
-    font-size: 1.5rem;
-    color: #4bb5a2;
-  }
-
-  img {
-    max-height: 5rem;
-  }
-}
-
-.forgotPassword {
-  color: #42c8bd;
-  text-decoration: none;
-  width: 100%;
-  text-align: end;
-  padding-right: 1rem;
-  font-size: rem;
-}
-
-.messageRegister {
-  color: #42c8bd;
-  margin-top: 2rem;
-
-  a {
-    color: #0092cc;
-    text-decoration: none;
   }
 }
 
