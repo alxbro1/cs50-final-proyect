@@ -13,7 +13,7 @@ export default class AuthController {
       return res.status(400).json({ error: "Invalid login data" });
     }
     const result = await SessionService.login(data);
-    res.json(result);
+    return res.json(result);
   }
 
   static async register(req: Request, res: Response) {
@@ -22,7 +22,7 @@ export default class AuthController {
       return res.status(400).json({ error: "Invalid registration data" });
     }
     const result = await SessionService.register(data);
-    res.json(result);
+    return res.json(result);
   }
 
   static async checkSession(req: Request, res: Response) {
@@ -31,6 +31,6 @@ export default class AuthController {
       return res.status(400).json({ error: "Invalid session data" });
     }
     const result = await SessionService.checkSession(data);
-    res.json(result);
+    return res.json(result);
   }
 }

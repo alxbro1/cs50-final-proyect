@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import path from "path";
 import cors from "cors";
 import session from "./routes/session";
+import professionalRouter from "./routes/profesional";
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use((req, res, next) => {
 
 app.use("/public", express.static(path.join(__dirname, "../public")));
 app.use("/session", session);
+app.use("/professionals", professionalRouter);
 app.use(
   (
     err: any,

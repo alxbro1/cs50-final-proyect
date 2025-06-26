@@ -1,0 +1,67 @@
+.button {
+background: linear-gradient(-25deg, #00e0af 0%, #0092cc 95%);
+border: none;
+border-radius: 25px;
+color: whitesmoke;
+padding: 0.5rem;
+min-width: 12rem;
+position: relative;
+font-family: "Catamaran", sans-serif;
+font-size: 1rem;
+font-weight: 600;
+margin-top: 2rem;
+}
+.button::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background: linear-gradient(180deg, #00d9b2, #0097ca);
+  border-radius: 25px;
+  z-index: -1;
+  filter: blur(5px);
+  opacity: 0.9;
+}
+.container {
+  display: flex;
+  min-width: 100vw;
+  min-height: 100vh;
+
+
+}
+button:hover {
+  cursor: pointer;
+}
+.containerForm {
+  width: 100%;
+  min-height: 100%;
+
+  padding: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h1 {
+    text-align: center;
+    color: whitesmoke;
+    font-size: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  form {
+    width: 100%;
+    max-width: 25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.alertContainer{
+  border-radius: 20px;
+}

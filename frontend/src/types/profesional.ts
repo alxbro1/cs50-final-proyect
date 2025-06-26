@@ -7,3 +7,6 @@ export type Professional = {
   updatedAt: Date;
   appointments: Appointment[];
 }
+export type ProfessionalFormValues = {
+  name: string;
+};

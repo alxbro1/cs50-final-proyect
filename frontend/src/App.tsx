@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { RegisterForm } from "./pages/Register/Register";
 import { AppoimentForm } from "./pages/Client";
 import { LoggInForm } from "./pages/LogIn";
+import { AdminForm } from "./pages/Admin";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route path="/login" element={<LoggInForm />} />
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/appointment" element={<AppoimentForm />} />
+        <Route path="/admin" element={<AdminForm />} />
       </Routes>
     </BrowserRouter>
   );
