@@ -1,23 +1,17 @@
-.container {
-  display: flex;
-  min-width: 100vw;
-  min-height: 100vh;
-
-  button {
-  background: linear-gradient(-25deg, #00e0af 0%, #0092cc 95%);
-  border: none;
-  border-radius: 25px;
-  color: whitesmoke;
-  padding: 0.5rem;
-  min-width: 12rem;
-  position: relative;
-  font-family: "Catamaran", sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
-  margin-top: 2rem;
+.button {
+background: linear-gradient(-25deg, #00e0af 0%, #0092cc 95%);
+border: none;
+border-radius: 25px;
+color: whitesmoke;
+padding: 0.5rem;
+min-width: 12rem;
+position: relative;
+font-family: "Catamaran", sans-serif;
+font-size: 1rem;
+font-weight: 600;
+margin-top: 2rem;
 }
-
-button::before {
+.button::before {
   content: "";
   position: absolute;
   top: 0px;
@@ -30,6 +24,12 @@ button::before {
   filter: blur(5px);
   opacity: 0.9;
 }
+.container {
+  display: flex;
+  min-width: 100vw;
+  min-height: 100vh;
+
+
 }
 button:hover {
   cursor: pointer;

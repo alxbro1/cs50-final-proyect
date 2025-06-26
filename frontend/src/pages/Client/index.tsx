@@ -5,12 +5,14 @@ import { useDispatch } from "react-redux";
 import { addAppointments } from "../../redux/appoinmentReducer";
 import { useNavigate } from "react-router-dom";
 import styles from "./index.module.css";
+import "./calendar.css";
 import { FaUser } from "react-icons/fa";
 import type { User } from "../../types/user";
 import { useEffect, useState } from "react";
 import { getProfessionals } from "../../helpers/getProfessionals";
 import type { Professional } from "../../types/profesional";
 import { SelectWithIcon } from "../../components/Input/SelectWithIcon";
+import Calendar from "react-calendar";
 
 export const AppoimentForm = () => {
   const navigate = useNavigate();
@@ -43,7 +45,7 @@ export const AppoimentForm = () => {
             }
           }}
         >
-          {() => (
+          {({ setFieldValue, values }) => (
             <Form className={styles.formulary}>
               <Field
                 name="professionalId"
@@ -51,15 +53,20 @@ export const AppoimentForm = () => {
                 placeholder="Select a Professional"
                 icon={FaUser}
                 color={false}
-                options={[
-                  ...professionals.map((prof) => ({
-                    value: prof.id,
-                    label: prof.name,
-                  })),
-                ]}
+                options={professionals.map((prof) => ({
+                  value: prof.id,
+                  label: prof.name,
+                }))}
+                value={values.professionalId}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                  setFieldValue("professionalId", e.target.value);
+                }}
                 required
               />
-              <button type="submit">Get Appointment</button>
+              <Calendar
+                className="customCalendar"
+              />
+              <button type="submit" className={styles.button}>Get Appointment</button>
             </Form>
           )}
         </Formik>
