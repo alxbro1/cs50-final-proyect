@@ -26,7 +26,7 @@ export class FieldsTableService {
 
     async deleteRow(id: number) {
         const response = await axios.delete(`${import.meta.env.VITE_API_URL}/${this.tableName}/${id}`);
-        if (response.status !== 200) {
+        if (response.status != 200 && response.status != 204) {
             throw new Error(`Failed to delete row with id ${id}`);
         }
         window.location.reload();
