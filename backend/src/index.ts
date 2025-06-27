@@ -5,6 +5,7 @@ import cors from "cors";
 import session from "./routes/session";
 import usersRouter from "./routes/users";
 import professionalRouter from "./routes/profesional";
+import appointmentRouter from "./routes/appointment";
 
 dotenv.config();
 
@@ -30,6 +31,7 @@ app.use("/public", express.static(path.join(__dirname, "../public")));
 app.use("/session", session);
 app.use("/professionals", professionalRouter);
 app.use("/users", usersRouter);
+app.use("/appointments", appointmentRouter);
 app.use(
   (
     err: any,

@@ -53,6 +53,11 @@ export const AdminForm = () => {
         <br />
         <h1>Admin Users</h1>
         <FieldsTable name="users" />
+        <br />
+        <hr/>
+        <br />
+        <h1>Admin Appointment</h1>
+        <FieldsTable name="appointments" />
       </div>
     </div>
   );

@@ -21,7 +21,7 @@ export default class ProfessionalService {
   }
 
   static async getFields() {
-    const fields = [{ label: "ID", name: "id" }, { label: "Name", name: "name" }];
+    const fields = [{ label: "ID", name: "id", type: "number" }, { label: "Name", name: "name", type: "string" }];
     return fields;
   }
 }

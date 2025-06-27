@@ -3,7 +3,19 @@ import prisma from "../config/db";
 
 export default class AppointmentService {
   static async getAppointments() {
-    const appointments = await prisma.appointment.findMany();
+    const appointments = await prisma.appointment.findMany({
+      include: {
+        professional: {
+          select: {
+            name: true,
+          },
+        },
+      },
+      orderBy: {
+        date: "asc",
+        hour: "asc",
+      },
+    });
     return appointments;
   }
 
@@ -22,7 +34,16 @@ export default class AppointmentService {
   }
 
   static async getFields() {
-    const fields = [{ label: "ID", name: "id" }, { label: "Name", name: "name" }];
+    const fields = [
+      { label: "ID", name: "id", type: "number" },
+      { label: "Name", name: "name", type: "string" },
+      { label: "Date", name: "date", type: "date" },
+      { label: "Hour", name: "hour", type: "number" },
+      { label: "Status", name: "status", type: "string" },
+      { label: "Created At", name: "createdAt", type: "date" },
+      { label: "Updated At", name: "updatedAt", type: "date" },
+      { label: "Professional", name: "professional", type: "string" },
+    ];
     return fields;
   }
 }

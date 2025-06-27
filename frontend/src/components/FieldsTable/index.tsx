@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { FieldsTableService } from "./service";
-import styles from "./index.module.css"; // Importa los estilos
+import styles from "./index.module.css";
 
 interface Field {
   name: string;
