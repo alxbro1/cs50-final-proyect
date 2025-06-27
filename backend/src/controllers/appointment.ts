@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import AppointmentService from "../services/profesional";
+import AppointmentService from "../services/appointment";
 
 export default class AppointmentController {
   async getAppointments(req: Request, res: Response) {
-    const professionals = await AppointmentService.getAppointments();
-    return res.json(professionals);
+    const appointments = await AppointmentService.getAppointments();
+    return res.json(appointments);
   }
   async createAppointment(req: Request, res: Response) {
     const data = req.body;
