@@ -5,6 +5,7 @@ import styles from "./index.module.css"; // Importa los estilos
 interface Field {
   name: string;
   label: string;
+  type: string;
 }
 
 interface Row {
@@ -39,7 +40,9 @@ const FieldsTable = ({ name }: { name: string }) => {
       <thead>
         <tr>
           {fields.map((field, index) => (
-            <th className={styles.th} key={index}>{field.name}</th>
+            <th className={styles.th} key={index}>
+              {field.name}
+            </th>
           ))}
           <th className={styles.th}>Actions</th>
         </tr>
@@ -47,13 +50,24 @@ const FieldsTable = ({ name }: { name: string }) => {
       <tbody>
         {rows.map((row) => (
           <tr className={styles.tr} key={row.id}>
-            {fields.map((field) => (
-              <td className={styles.td} key={field.name}>
-                {String(row[field.name] ?? "")}
-              </td>
-            ))}
+            {fields.map((field) =>
+              field.type === "date" ? (
+                <td className={styles.td} key={field.name}>
+                  {new Date(row[field.name] as string).toLocaleDateString()}
+                </td>
+              ) : (
+                <td className={styles.td} key={field.name}>
+                  {String(row[field.name] ?? "")}
+                </td>
+              )
+            )}
             <td className={styles.td}>
-              <button className={styles.button} onClick={() => handleDeleteRow(row.id)}>Delete</button>
+              <button
+                className={styles.button}
+                onClick={() => handleDeleteRow(row.id)}
+              >
+                Delete
+              </button>
             </td>
           </tr>
         ))}

@@ -4,6 +4,7 @@ import zod from "zod";
 export const FieldSchema = zod.object({
     name: zod.string(),
     label: zod.string(),
+    type: zod.string(),
 });
 export const FieldResponseSchema = zod.array(FieldSchema);
 
