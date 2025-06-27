@@ -10,6 +10,9 @@ router.post("/", async (req: Request, res: Response) => {
 router.get("/", async (req: Request, res: Response) => {
   await controller.getProfessionals(req, res);
 });
+router.get("/fields", async (req: Request, res: Response) => {
+  await controller.getFields(req, res);
+});
 router.delete("/:id", async (req: Request, res: Response) => {
   await controller.deleteProfessional(req, res);
 });

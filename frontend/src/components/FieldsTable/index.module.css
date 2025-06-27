@@ -1,5 +1,6 @@
 .table {
   width: 100%;
+  max-width: 25rem;
   border-collapse: collapse;
   margin: 1rem 0;
   background: #fff;

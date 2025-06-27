@@ -10,6 +10,7 @@ import type {
 } from "../../types/profesional";
 import { validateProfessional } from "../../helpers/validateProfesionals";
 import { InputWithIcon } from "../../components/Input/Input";
+import FieldsTable from "../../components/FieldsTable";
 
 export const AdminForm = () => {
 
@@ -21,6 +22,7 @@ export const AdminForm = () => {
       <div className={styles.containerForm}>
         <h1>Admin Professionals</h1>
         <br />
+        <FieldsTable name="professionals" />
         <Formik
           initialValues={{ name: "" }}
           validate={validateProfessional}

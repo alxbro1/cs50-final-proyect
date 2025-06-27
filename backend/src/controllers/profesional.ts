@@ -21,4 +21,9 @@ export default class ProfessionalController {
     }
     res.status(204).send();
   }
+
+  async getFields(req: Request, res: Response) {
+    const fields = await ProfessionalService.getFields();
+    return res.json(fields);
+  }
 }

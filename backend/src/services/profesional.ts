@@ -19,4 +19,9 @@ export default class ProfessionalService {
     });
     return deletedProfessional;
   }
+
+  static async getFields() {
+    const fields = [{ label: "ID", name: "id" }, { label: "Name", name: "name" }];
+    return fields;
+  }
 }

@@ -20,7 +20,7 @@ export class FieldsTableService {
     }
 
     async getRows() {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/${this.tableName}/rows`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/${this.tableName}`);
         return response.data;
     }
 

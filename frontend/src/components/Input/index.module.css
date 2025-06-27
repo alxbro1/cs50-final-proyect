@@ -127,16 +127,3 @@
   background: #fff;
   font-weight: 600;
 }
-
-/* Opcional: flecha personalizada para el select */
-.inputWithIconG::after,
-.inputWithIconV::after {
-  content: "▼";
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  color: #888;
-  font-size: 1rem;
-}
