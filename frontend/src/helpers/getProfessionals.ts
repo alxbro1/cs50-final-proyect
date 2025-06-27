@@ -6,7 +6,7 @@ export const getProfessionals = async (): Promise<Professional[]> => {
     const result = await axios.get(
       `${import.meta.env.VITE_API_URL}/professionals`
     );
-    return result.data.professionals;
+    return result.data;
   } catch {
     throw Error("Could not fetch professionals");
   }

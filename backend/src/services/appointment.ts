@@ -11,10 +11,10 @@ export default class AppointmentService {
           },
         },
       },
-      orderBy: {
-        date: "asc",
-        hour: "asc",
-      },
+      orderBy: [
+        { date: "asc" },
+        { hour: "asc" },
+      ],
     });
     return appointments;
   }
