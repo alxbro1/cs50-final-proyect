@@ -21,7 +21,7 @@ export const sendLogInData = async (data: LogInData): Promise<User> => {
      
         if (result && result.status == 200) {
             localStorage.setItem("token", result.data.token);
-            return result.data.user;
+            return result.data;
         }
         throw Error("Invalid response");
     } catch {

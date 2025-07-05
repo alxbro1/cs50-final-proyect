@@ -8,5 +8,6 @@ type User = {
     service?: string;
     status?: string;
   }>;
+  role?: string;
 };
 export type { User };
