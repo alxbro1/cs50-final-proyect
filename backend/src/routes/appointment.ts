@@ -16,5 +16,8 @@ router.get("/fields", async (req: Request, res: Response) => {
 router.delete("/:id", async (req: Request, res: Response) => {
   await controller.deleteAppointment(req, res);
 });
+router.patch("/:id", async (req: Request, res: Response) => {
+  await controller.updateAppointment(req, res);
+});
 
 export default router;

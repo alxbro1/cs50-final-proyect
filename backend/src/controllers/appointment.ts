@@ -26,4 +26,16 @@ export default class AppointmentController {
     const fields = await AppointmentService.getFields();
     return res.json(fields);
   }
+  async updateAppointment(req: Request, res: Response) {
+    const { id } = req.params;
+    const data = req.body;
+    const updatedAppointment = await AppointmentService.updateAppointment(
+      Number(id),
+      data
+    );
+    if (!updatedAppointment) {
+      return res.status(404).json({ error: "Appointment not found" });
+    }
+    res.json(updatedAppointment);
+  }
 }

@@ -7,9 +7,34 @@ import type { ProfessionalFormValues } from "../../types/profesional";
 import { validateProfessional } from "../../helpers/validateProfesionals";
 import { InputWithIcon } from "../../components/Input/Input";
 import FieldsTable from "../../components/FieldsTable";
+import axios from "axios";
+import type { Appointment } from "../../types/appoinment";
 
 export const AdminForm = () => {
   useEffect(() => {}, []);
+
+  const handleAppointmentStatusChange = async (
+    newValue: unknown,
+    row: unknown,
+    fieldName: string
+  ) => {
+    try {
+      const appointment = row as Appointment; 
+      await axios.patch(
+        `${import.meta.env.VITE_API_URL}/appointments/${appointment.id}`,
+        { [fieldName]: newValue },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      window.location.reload();
+    } catch (error) {
+      console.error("Error updating appointment status:", error);
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -57,7 +82,10 @@ export const AdminForm = () => {
         <hr/>
         <br />
         <h1>Admin Appointment</h1>
-        <FieldsTable name="appointments" />
+        <FieldsTable
+          name="appointments"
+          onSelectChange={handleAppointmentStatusChange}
+        />
       </div>
     </div>
   );

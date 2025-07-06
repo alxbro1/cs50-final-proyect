@@ -26,4 +26,17 @@ export default class ProfessionalController {
     const fields = await ProfessionalService.getFields();
     return res.json(fields);
   }
+
+  async updateProfessional(req: Request, res: Response) {
+    const { id } = req.params;
+    const data = req.body;
+    const updatedProfessional = await ProfessionalService.updateProfessional(
+      Number(id),
+      data
+    );
+    if (!updatedProfessional) {
+      return res.status(404).json({ error: "Professional not found" });
+    }
+    res.json(updatedProfessional);
+  }
 }

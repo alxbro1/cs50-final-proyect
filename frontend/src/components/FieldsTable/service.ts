@@ -5,6 +5,8 @@ export const FieldSchema = zod.object({
     name: zod.string(),
     label: zod.string(),
     type: zod.string(),
+    select: zod.boolean().optional(),
+    options: zod.array(zod.string()).optional()
 });
 export const FieldResponseSchema = zod.array(FieldSchema);
 

@@ -1,3 +1,4 @@
+import { Professional } from "@prisma/client";
 import prisma from "../config/db";
 
 export default class ProfessionalService {
@@ -23,5 +24,13 @@ export default class ProfessionalService {
   static async getFields() {
     const fields = [{ label: "ID", name: "id", type: "number" }, { label: "Name", name: "name", type: "string" }];
     return fields;
+  }
+
+  static async updateProfessional(id: number, data: Partial<Professional>) {
+    const updatedProfessional = await prisma.professional.update({
+      where: { id },
+      data,
+    });
+    return updatedProfessional;
   }
 }

@@ -6,6 +6,8 @@ interface Field {
   name: string;
   label: string;
   type: string;
+  select?: boolean;
+  options?: string[];
 }
 
 interface Row {
@@ -13,7 +15,12 @@ interface Row {
   [key: string]: unknown;
 }
 
-const FieldsTable = ({ name }: { name: string }) => {
+interface FieldsTableProps {
+  name: string;
+  onSelectChange?: (newValue: unknown, row: Row, fieldName: string) => void;
+}
+
+const FieldsTable = ({ name, onSelectChange }: FieldsTableProps) => {
   const service = useMemo(() => new FieldsTableService(name), [name]);
   const [fields, setFields] = useState<Field[]>([]);
   const [rows, setRows] = useState<Row[]>([]);
@@ -35,6 +42,17 @@ const FieldsTable = ({ name }: { name: string }) => {
     setRows(rows.filter((row) => row.id !== id));
   };
 
+  const handleSelectChange = (
+    field: Field,
+    row: Row,
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const value = event.target.value;
+    if (onSelectChange) {
+      onSelectChange(value, row, field.name);
+    }
+  };
+
   return (
     <table className={styles.table}>
       <thead>
@@ -51,7 +69,20 @@ const FieldsTable = ({ name }: { name: string }) => {
         {rows.map((row) => (
           <tr className={styles.tr} key={row.id}>
             {fields.map((field) =>
-              field.type === "date" ? (
+              field.select ? (
+                <td className={styles.td} key={field.name}>
+                  <select
+                    value={String(row[field.name])}
+                    onChange={(e) => handleSelectChange(field, row, e)}
+                  >
+                    {field.options?.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+              ) : field.type === "date" ? (
                 <td className={styles.td} key={field.name}>
                   {new Date(row[field.name] as string).toLocaleDateString()}
                 </td>

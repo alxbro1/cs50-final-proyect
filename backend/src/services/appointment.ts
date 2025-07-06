@@ -44,11 +44,19 @@ export default class AppointmentService {
       { label: "name", name: "user", type: "object" },
       { label: "Date", name: "date", type: "date" },
       { label: "Hour", name: "hour", type: "number" },
-      { label: "Status", name: "status", type: "string" },
+      { label: "Status", name: "status", type: "string", select: true, options: ["PENDING", "CONFIRMED", "CANCELLED"] },
       { label: "Created At", name: "createdAt", type: "date" },
       { label: "Updated At", name: "updatedAt", type: "date" },
       { label: "Professional", name: "professional", type: "object" },
     ];
     return fields;
+  }
+
+  static async updateAppointment(id: number, data: Partial<Appointment>) {
+    const updatedAppointment = await prisma.appointment.update({
+      where: { id },
+      data,
+    });
+    return updatedAppointment;
   }
 }
