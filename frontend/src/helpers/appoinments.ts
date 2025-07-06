@@ -1,5 +1,5 @@
 import type { Appointment } from "../types/appoinment";
-
+import axios from "axios";
 
 export class AppointmentsService {
   static async create(
@@ -8,16 +8,20 @@ export class AppointmentsService {
       "id" | "createdAt" | "updatedAt" | "professional" | "user"
     >
   ): Promise<Appointment> {
-    const response = await fetch("/api/appointments", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(appointmentData),
-    });
-    if (!response.ok) {
+    const apiUrl = import.meta.env.VITE_API_URL;
+    try {
+      const response = await axios.post<Appointment>(
+        `${apiUrl}/appointments`,
+        appointmentData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch {
       throw new Error("Failed to create appointment");
     }
-    return response.json();
   }
 }

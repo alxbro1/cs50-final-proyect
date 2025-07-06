@@ -1,5 +1,4 @@
 import { Formik, Form, Field } from "formik";
-import { validateLoginForm } from "../../helpers/validateLogin";
 import { useNavigate } from "react-router-dom";
 import styles from "./index.module.css";
 import "./calendar.css";
@@ -18,7 +17,7 @@ const hours = Array.from({ length: 10 }, (_, i) => 9 + i);
 
 export const AppoimentForm = () => {
   const navigate = useNavigate();
-  const user = useSelector((state: { user: User }) => state.user);
+  const user = useSelector((state: { user: {user: User} }) => state.user.user);
   const [professionals, setProfessionals] = useState<Professional[]>([]);
   const [date, setDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState<number | null>(null);
@@ -44,15 +43,12 @@ export const AppoimentForm = () => {
             hour: selectedTime ?? 0,
             userId: user?.id ?? 0,
             professionalId: 0,
-            email: "",
-            password: "",
           }}
-          validate={validateLoginForm}
           enableReinitialize={true}
           onSubmit={async (values) => {
             try {
-              if(!user.id) throw new Error("User ID is required");
-
+              if (user.id === null || user.id === undefined) throw new Error("User ID is required");
+              if (typeof values.professionalId !== "number" || values.professionalId <= 0) values.professionalId = Number(values.professionalId);
               const appointmentData = {
                 userId: user.id,
                 professionalId: values.professionalId,
@@ -111,7 +107,7 @@ export const AppoimentForm = () => {
                       border: "none",
                       cursor: "pointer",
                     }}
-                    onClick={() => setSelectedTime(hour * 100)}
+                    onClick={() => setSelectedTime(hour)}
                     type="button"
                   >
                     {hour}:00
