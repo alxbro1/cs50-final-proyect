@@ -10,6 +10,11 @@ export default class AppointmentService {
             name: true,
           },
         },
+        user: {
+          select: {
+            name: true,
+          },
+        },
       },
       orderBy: [
         { date: "asc" },
@@ -36,13 +41,13 @@ export default class AppointmentService {
   static async getFields() {
     const fields = [
       { label: "ID", name: "id", type: "number" },
-      { label: "Name", name: "name", type: "string" },
+      { label: "name", name: "user", type: "object" },
       { label: "Date", name: "date", type: "date" },
       { label: "Hour", name: "hour", type: "number" },
       { label: "Status", name: "status", type: "string" },
       { label: "Created At", name: "createdAt", type: "date" },
       { label: "Updated At", name: "updatedAt", type: "date" },
-      { label: "Professional", name: "professional", type: "string" },
+      { label: "Professional", name: "professional", type: "object" },
     ];
     return fields;
   }

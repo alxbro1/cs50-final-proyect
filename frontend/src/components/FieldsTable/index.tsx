@@ -55,9 +55,13 @@ const FieldsTable = ({ name }: { name: string }) => {
                 <td className={styles.td} key={field.name}>
                   {new Date(row[field.name] as string).toLocaleDateString()}
                 </td>
+              ) : field.type === "object" ? (
+                <td className={styles.td} key={field.name}>
+                  {String((row[field.name] as { name?: string })?.name ?? "")}
+                </td>
               ) : (
                 <td className={styles.td} key={field.name}>
-                  {String(row[field.name] ?? "")}
+                  {String(row[field.name])}
                 </td>
               )
             )}
