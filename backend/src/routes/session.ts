@@ -9,7 +9,7 @@ router.post("/login", async (req: Request, res: Response) => {
 router.post("/register", (async (req: Request, res: Response) => {
   await AuthController.register(req, res);
 }));
-router.get("/session", (async (req: Request, res: Response) => {
+router.get("/auth/validate", (async (req: Request, res: Response) => {
   await AuthController.checkSession(req, res);
 }));
 export default router;

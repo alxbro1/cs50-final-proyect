@@ -1,8 +1,8 @@
 type User = {
-  id?: string;
+  id?: number;
   isVerified?: boolean;
   appointments?: Array<{
-    id?: string;
+    id?: number;
     date?: string;
     time?: string;
     service?: string;

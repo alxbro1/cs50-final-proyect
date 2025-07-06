@@ -1,24 +1,24 @@
 import { Formik, Form, Field } from "formik";
-import { sendLogInData } from "../../helpers/sendLogInData";
 import { validateLoginForm } from "../../helpers/validateLogin";
-import { useDispatch } from "react-redux";
-import { addAppointments } from "../../redux/appoinmentReducer";
 import { useNavigate } from "react-router-dom";
 import styles from "./index.module.css";
 import "./calendar.css";
 import { FaUser } from "react-icons/fa";
-import type { User } from "../../types/user";
 import { useEffect, useState } from "react";
 import { getProfessionals } from "../../helpers/getProfessionals";
 import type { Professional } from "../../types/profesional";
 import { SelectWithIcon } from "../../components/Input/SelectWithIcon";
+import { AppointmentsService } from "../../helpers/appoinments";
 import Calendar from "react-calendar";
+import { useSelector } from "react-redux";
+import type { User } from "../../types/user";
+import { AppointmentStatus} from "../../types/appoinment"; 
 
-const hours = Array.from({ length: 10 }, (_, i) => 9 + i); // 9 a 18
+const hours = Array.from({ length: 10 }, (_, i) => 9 + i);
 
 export const AppoimentForm = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const user = useSelector((state: { app: { user: User } }) => state.app.user);
   const [professionals, setProfessionals] = useState<Professional[]>([]);
   const [date, setDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState<number | null>(null);
@@ -40,10 +40,10 @@ export const AppoimentForm = () => {
         <br />
         <Formik
           initialValues={{
-            date: date.toISOString().split("T")[0],
-            hour: selectedTime ?? "",
-            userId: "",
-            professionalId: "",
+            date: date,
+            hour: selectedTime ?? 0,
+            userId: user?.id ?? 0,
+            professionalId: 0,
             email: "",
             password: "",
           }}
@@ -51,15 +51,19 @@ export const AppoimentForm = () => {
           enableReinitialize={true}
           onSubmit={async (values) => {
             try {
-              const data: User = await sendLogInData(values);
-              if (data.id && !data.isVerified)
-                throw Error("User is not verified");
-              setTimeout(() => {
-                dispatch(addAppointments(data.appointments));
-                navigate("/");
-              }, 2000);
+              if(!user.id) throw new Error("User ID is required");
+
+              const appointmentData = {
+                userId: user.id,
+                professionalId: values.professionalId,
+                date: values.date,
+                hour: values.hour,
+                status: AppointmentStatus.PENDING
+              };
+              await AppointmentsService.create(appointmentData);
+              navigate("/");
             } catch (err) {
-              console.error("Login failed:", err);
+              console.error("Appointment creation failed:", err);
             }
           }}
         >
@@ -107,7 +111,7 @@ export const AppoimentForm = () => {
                       border: "none",
                       cursor: "pointer",
                     }}
-                    onClick={() => setSelectedTime(hour)}
+                    onClick={() => setSelectedTime(hour * 100)}
                     type="button"
                   >
                     {hour}:00

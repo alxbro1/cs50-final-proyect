@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import SessionService from "../services/session";
 import {
-  checkSessionSchema,
   loginSchema,
   registerSchema,
 } from "../schema/session/session";
@@ -26,11 +25,15 @@ export default class AuthController {
   }
 
   static async checkSession(req: Request, res: Response) {
-    const data = checkSessionSchema.parse(req.body);
-    if (!data) {
-      return res.status(400).json({ error: "Invalid session data" });
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({ message: "No token provided" });
     }
-    const result = await SessionService.checkSession(data);
-    return res.json(result);
+    const token = authHeader.split(" ")[1];
+    const result = await SessionService.checkSession({ token });
+    if (result.status === 401) {
+      return res.status(result.status).json({ message: result.message });
+    }
+    return res.status(result.status).json(result.data);
   }
 }
