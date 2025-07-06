@@ -34,11 +34,10 @@ export const LoggInForm = () => {
             try {
               const data: User = await sendLogInData(values);
               console.log(data);
-              if (data.id && !data.isVerified) throw Error("User is not verified");
+              if (!data.id) throw Error("User is not verified");
               setTimeout(() => {
                 dispatch(loginUser(data));
                 dispatch(addAppointments(data.appointments));
-                navigate("/");
               }, 2000);
               if (data.role === "ADMIN") {
                 navigate("/admin");

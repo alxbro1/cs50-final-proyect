@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import e, { Request, Response } from "express";
 import SessionService from "../services/session";
 import {
   loginSchema,
@@ -12,6 +12,12 @@ export default class AuthController {
       return res.status(400).json({ error: "Invalid login data" });
     }
     const result = await SessionService.login(data);
+    if (result.status === 401) {
+      return res.status(result.status).json({ message: result.message });
+    }
+    else if (result.status === 404) {
+      return res.status(result.status).json({ message: result.message });
+    }
     return res.json(result);
   }
 

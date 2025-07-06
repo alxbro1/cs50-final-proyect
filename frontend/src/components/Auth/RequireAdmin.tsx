@@ -3,7 +3,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import type { User } from "../../types/user";
 
 export function RequireAdmin({ children }: { children: React.ReactElement }) {
-  const user = useSelector((state: { user: User }) => state.user);
+  const user = useSelector((state: { user: { user: User } }) => state.user.user);
   const location = useLocation();
 
   if (!user || !user.id) {
