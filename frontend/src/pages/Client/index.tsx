@@ -18,7 +18,7 @@ const hours = Array.from({ length: 10 }, (_, i) => 9 + i);
 
 export const AppoimentForm = () => {
   const navigate = useNavigate();
-  const user = useSelector((state: { app: { user: User } }) => state.app.user);
+  const user = useSelector((state: { user: User }) => state.user);
   const [professionals, setProfessionals] = useState<Professional[]>([]);
   const [date, setDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState<number | null>(null);
