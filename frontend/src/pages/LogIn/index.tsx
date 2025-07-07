@@ -85,7 +85,7 @@ export const LoggInForm = () => {
         <div className={styles.containerRight}>
           <div className={styles.logotypeContainer}>
             <h2>
-              Medic <br /> App
+              Medic App
             </h2>
           </div>
           <h1>Welcome back to our virtual office!</h1>
