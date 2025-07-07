@@ -1,4 +1,4 @@
-import type { Appointment } from "../types/appoinment";
+import type { Appointment, Status } from "../types/appoinment";
 import axios from "axios";
 
 export class AppointmentsService {
@@ -42,6 +42,24 @@ export class AppointmentsService {
       return response.data;
     } catch {
       throw new Error("Failed to create appointment");
+    }
+  }
+
+  static async updateStatus(appointmentId: number, status: Status): Promise<Appointment> {
+    const apiUrl = import.meta.env.VITE_API_URL;
+    try {
+      const response = await axios.patch<Appointment>(
+        `${apiUrl}/appointments/${appointmentId}`,
+        { status },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch {
+      throw new Error("Failed to update appointment status");
     }
   }
 }

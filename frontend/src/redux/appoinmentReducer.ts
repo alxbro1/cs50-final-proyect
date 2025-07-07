@@ -1,34 +1,41 @@
 import { createSlice } from "@reduxjs/toolkit";
+import type { Appointment as AppointmentType } from "../types/appoinment";
 
-type Appointment = {
-  id: string;
-};
+type Appointment = AppointmentType;
 
 type State = {
-  appoinments: Appointment[];
+  appointments: Appointment[];
 };
 
 const initialState: State = {
-  appoinments: [],
+  appointments: [],
 };
 
-export const appoinmentSlice = createSlice({
-  name: "appoinments",
+export const appointmentSlice = createSlice({
+  name: "appointments",
   initialState,
   reducers: {
     addAppointments: (state, action) => {
-      state.appoinments = action.payload;
+      state.appointments = action.payload;
     },
     addAnAppointment: (state, action) => {
-      const actualData = [...state.appoinments];
-      state.appoinments = [...actualData, action.payload];
+      const actualData = [...state.appointments];
+      state.appointments = [...actualData, action.payload];
     },
     cancelAppointment: (state, action) => {
-      state.appoinments = state.appoinments.filter(
+      state.appointments = state.appointments.filter(
         (appointment) => appointment.id !== action.payload
+      );
+    },
+    updateAppointment: (state, action) => {
+      const { id, status } = action.payload;
+      state.appointments = state.appointments.map((appointment) =>
+        appointment.id === id ? { ...appointment, status } : appointment
       );
     },
   },
 });
 
-export const { addAppointments, cancelAppointment, addAnAppointment } =  appoinmentSlice.actions;
+export const { addAppointments, cancelAppointment, addAnAppointment, updateAppointment } = appointmentSlice.actions;
+
+export default appointmentSlice.reducer;

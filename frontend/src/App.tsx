@@ -12,7 +12,14 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={
+            <RequireAuth>
+              <Home />
+            </RequireAuth>
+          }
+        />
         <Route path="/login" element={<LoggInForm />} />
         <Route path="/register" element={<RegisterForm />} />
         <Route
