@@ -2,8 +2,13 @@ import { Appointment } from "@prisma/client";
 import prisma from "../config/db";
 
 export default class AppointmentService {
-  static async getAppointments() {
+  static async getAppointments(userId?: number, professionalId?: number) {
+    const where = {
+      ...(userId && { userId }),
+      ...(professionalId && { professionalId }),
+    };
     const appointments = await prisma.appointment.findMany({
+      where,
       include: {
         professional: {
           select: {

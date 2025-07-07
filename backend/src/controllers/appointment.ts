@@ -3,6 +3,21 @@ import AppointmentService from "../services/appointment";
 
 export default class AppointmentController {
   async getAppointments(req: Request, res: Response) {
+    const userId = req.query.userId ? Number(req.query.userId) : undefined;
+    if (userId) {
+      const appointments = await AppointmentService.getAppointments(userId);
+      return res.json(appointments);
+    }
+    const professionalId = req.query.professionalId
+      ? Number(req.query.professionalId)
+      : undefined;
+    if (professionalId) {
+      const appointments = await AppointmentService.getAppointments(
+        undefined,
+        professionalId
+      );
+      return res.json(appointments);
+    }
     const appointments = await AppointmentService.getAppointments();
     return res.json(appointments);
   }

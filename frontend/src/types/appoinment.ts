@@ -13,6 +13,7 @@ export type Appointment = {
   id: number;
   userId: number;
   date: Date;
+  hour: number; // <-- agrega esta línea
   status: Status;
   createdAt: Date;
   updatedAt: Date;
