@@ -19,8 +19,6 @@ export const AppoimentForm = () => {
   const navigate = useNavigate();
   const user = useSelector((state: { user: {user: User} }) => state.user.user);
   const [professionals, setProfessionals] = useState<Professional[]>([]);
-  const [date, setDate] = useState(new Date());
-  const [selectedTime, setSelectedTime] = useState<number | null>(null);
 
   useEffect(() => {
     getProfessionals().then(setProfessionals).catch(console.error);
@@ -39,12 +37,11 @@ export const AppoimentForm = () => {
         <br />
         <Formik
           initialValues={{
-            date: date,
-            hour: selectedTime ?? 0,
+            date: today,
+            hour: 0,
             userId: user?.id ?? 0,
             professionalId: 0,
           }}
-          enableReinitialize={true}
           onSubmit={async (values) => {
             try {
               if (user.id === null || user.id === undefined) throw new Error("User ID is required");
@@ -88,32 +85,34 @@ export const AppoimentForm = () => {
                 tileDisabled={disableSundays}
                 onChange={(value) => {
                   if (value instanceof Date) {
-                    setDate(value);
+                    setFieldValue("date", value);
                   } else if (Array.isArray(value) && value[0] instanceof Date) {
-                    setDate(value[0]);
+                    setFieldValue("date", value[0]);
                   }
                 }}
-                value={date}
+                value={values.date}
               />
-              <div style={{ display: "flex", gap: 8 }}>
-                {hours.map((hour) => (
-                  <button
-                    key={hour}
-                    style={{
-                      background: selectedTime === hour ? "#007bff" : "#eee",
-                      color: selectedTime === hour ? "#fff" : "#000",
-                      borderRadius: 4,
-                      padding: "8px 16px",
-                      border: "none",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => setSelectedTime(hour)}
-                    type="button"
-                  >
-                    {hour}:00
-                  </button>
-                ))}
-              </div>
+              {values.professionalId && values.date && (
+                <div style={{ display: "flex", gap: 8 }}>
+                  {hours.map((hour) => (
+                    <button
+                      key={hour}
+                      style={{
+                        background: values.hour === hour ? "#007bff" : "#eee",
+                        color: values.hour === hour ? "#fff" : "#000",
+                        borderRadius: 4,
+                        padding: "8px 16px",
+                        border: "none",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => setFieldValue("hour", hour)}
+                      type="button"
+                    >
+                      {hour}:00
+                    </button>
+                  ))}
+                </div>
+              )}
               <button type="submit" className={styles.button}>Get Appointment</button>
             </Form>
           )}

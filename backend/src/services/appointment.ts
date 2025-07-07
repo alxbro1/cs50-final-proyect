@@ -25,6 +25,7 @@ export default class AppointmentService {
   }
 
   static async createAppointment(data: Omit<Appointment, "id">) {
+    console.log("Creating appointment with data:", data);
     const newAppointment = await prisma.appointment.create({
       data,
     });
@@ -36,7 +37,7 @@ export default class AppointmentService {
       where: { id },
     });
     return deletedAppointment;
-  }
+  } 
 
   static async getFields() {
     const fields = [
