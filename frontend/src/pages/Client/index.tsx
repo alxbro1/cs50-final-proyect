@@ -23,7 +23,6 @@ export const AppoimentForm = () => {
   const [professionals, setProfessionals] = useState<Professional[]>([]);
   const [busyHours, setBusyHours] = useState<number[]>([]);
   
-  // Usar un estado para los valores del formulario en vez de una variable que se reasigna
   const [formState, setFormState] = useState({
     date: new Date(),
     hour: 0,
@@ -70,7 +69,6 @@ export const AppoimentForm = () => {
     }
   }, []);
 
-  // Ahora este efecto se ejecutará solo cuando cambie formState
   useEffect(() => {
     if (formState.professionalId && formState.date) {
       fetchBusyHours(Number(formState.professionalId), formState.date);
