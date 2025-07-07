@@ -140,9 +140,8 @@ export const RegisterForm = () => {
       {width > 425 && (
         <div className={styles.containerRight}>
           <div className={styles.logotypeContainer}>
-            <img src="/IconProjectM3.svg" />
             <h2>
-              Mind <br /> Wellnes
+              Medic <br /> App
             </h2>
           </div>
           <h1>Welcome back to our virtual office!</h1>

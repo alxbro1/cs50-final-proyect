@@ -32,8 +32,8 @@ export const LoggInForm = () => {
           onSubmit={async (values) => {
 
             try {
-              const data: User = await sendLogInData(values);
-              console.log(data);
+              const responseData = await sendLogInData(values);
+              const data: User = {...responseData, id: responseData.id ? Number(responseData.id) : undefined};
               if (!data.id) throw Error("User is not verified");
               setTimeout(() => {
                 dispatch(loginUser(data));
@@ -84,9 +84,8 @@ export const LoggInForm = () => {
       {width > 425 && (
         <div className={styles.containerRight}>
           <div className={styles.logotypeContainer}>
-            <img src="/IconProjectM3.svg" />
             <h2>
-              Mind <br /> Wellnes
+              Medic <br /> App
             </h2>
           </div>
           <h1>Welcome back to our virtual office!</h1>
