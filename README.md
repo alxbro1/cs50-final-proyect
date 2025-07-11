@@ -1,5 +1,5 @@
 # Medic App
-## Video Demo:  <URL HERE>
+## Video Demo:  [Video](https://youtu.be/X_8ZxRl9t5w)
 ## Description:
 ### Overview
 Medic App is a web application tailored for the medical industry, focusing on enabling users to schedule appointments with healthcare professionals efficiently. The application is designed to streamline the process for patients and medical clinics alike. For the primary client, typically a medical clinic, the app provides a robust platform where administrators can oversee all appointment-related activities, including viewing, confirming, canceling, or marking appointments as pending. Additionally, the admin dashboard allows for the management of professionals and clients, including the ability to add new professionals and monitor client interactions with the clinic.
