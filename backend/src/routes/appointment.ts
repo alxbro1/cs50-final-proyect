@@ -13,6 +13,9 @@ router.get("/", async (req: Request, res: Response) => {
 router.get("/fields", async (req: Request, res: Response) => {
   await controller.getFields(req, res);
 });
+router.get("/busy-hours", async (req: Request, res: Response) => {
+  await controller.getBusyHours(req, res);
+});
 router.delete("/:id", async (req: Request, res: Response) => {
   await controller.deleteAppointment(req, res);
 });

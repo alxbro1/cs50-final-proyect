@@ -62,4 +62,16 @@ export class AppointmentsService {
       throw new Error("Failed to update appointment status");
     }
   }
+
+  static async getBusyHours(professionalId: number, date: string): Promise<number[]> {
+    const apiUrl = import.meta.env.VITE_API_URL;
+    try {
+      const response = await axios.get<number[]>(
+        `${apiUrl}/appointments/busy-hours?professionalId=${professionalId}&date=${date}`
+      );
+      return response.data;
+    } catch {
+      throw new Error("Failed to fetch busy hours");
+    }
+  }
 }

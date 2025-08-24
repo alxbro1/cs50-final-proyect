@@ -53,4 +53,25 @@ export default class AppointmentController {
     }
     res.json(updatedAppointment);
   }
+
+  async getBusyHours(req: Request, res: Response) {
+    const professionalId = req.query.professionalId 
+      ? Number(req.query.professionalId) 
+      : undefined;
+    const date = req.query.date as string;
+    
+    if (!professionalId || !date) {
+      return res.status(400).json({ 
+        error: "Both professionalId and date are required" 
+      });
+    }
+
+    try {
+      const busyHours = await AppointmentService.getBusyHours(professionalId, date);
+      res.json(busyHours);
+    } catch (error) {
+      console.error("Error fetching busy hours:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }
 }

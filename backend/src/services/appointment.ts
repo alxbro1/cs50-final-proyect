@@ -65,4 +65,28 @@ export default class AppointmentService {
     });
     return updatedAppointment;
   }
+
+  static async getBusyHours(professionalId: number, date: string): Promise<number[]> {
+    const startDate = new Date(date);
+    const endDate = new Date(date);
+    endDate.setDate(endDate.getDate() + 1);
+
+    const appointments = await prisma.appointment.findMany({
+      where: {
+        professionalId,
+        date: {
+          gte: startDate,
+          lt: endDate,
+        },
+        status: {
+          not: "CANCELLED"
+        }
+      },
+      select: {
+        hour: true,
+      },
+    });
+
+    return appointments.map(appointment => appointment.hour);
+  }
 }

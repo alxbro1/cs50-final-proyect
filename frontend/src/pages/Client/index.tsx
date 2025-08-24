@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./index.module.css";
 import "./calendar.css";
 import { FaUser } from "react-icons/fa";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { getProfessionals } from "../../helpers/getProfessionals";
 import type { Professional } from "../../types/profesional";
 import { SelectWithIcon } from "../../components/Input/SelectWithIcon";
@@ -22,6 +22,16 @@ export const AppoimentForm = () => {
   const user = useSelector((state: { user: {user: User} }) => state.user.user);
   const [professionals, setProfessionals] = useState<Professional[]>([]);
   const [busyHours, setBusyHours] = useState<number[]>([]);
+  const [isLoadingHours, setIsLoadingHours] = useState(false);
+  const [busyHoursCache, setBusyHoursCache] = useState<Record<string, { hours: number[], timestamp: number }>>({});
+  
+  // Memoize available hours calculation
+  const availableHours = useMemo(() => {
+    return hours.filter(hour => !busyHours.includes(hour));
+  }, [busyHours]);
+
+  // Cache expiration time (5 minutes)
+  const CACHE_EXPIRATION_MS = 5 * 60 * 1000;
   
   const [formState, setFormState] = useState({
     date: new Date(),
@@ -57,17 +67,37 @@ export const AppoimentForm = () => {
       setBusyHours([]);
       return;
     }
+
+    const dateStr = date.toISOString().split("T")[0];
+    const cacheKey = `${professionalId}-${dateStr}`;
+    
+    // Check cache first (with expiration)
+    const cachedData = busyHoursCache[cacheKey];
+    if (cachedData && (Date.now() - cachedData.timestamp) < CACHE_EXPIRATION_MS) {
+      setBusyHours(cachedData.hours);
+      return;
+    }
+
+    setIsLoadingHours(true);
     try {
-      const appointments = await AppointmentsService.getByProfessionalId(professionalId);
-      const selectedDay = date.toISOString().split("T")[0];
-      const busy = appointments
-        .filter(a => new Date(a.date).toISOString().split("T")[0] === selectedDay)
-        .map(a => a.hour);
+      const busy = await AppointmentsService.getBusyHours(professionalId, dateStr);
       setBusyHours(busy);
+      
+      // Cache the result with timestamp
+      setBusyHoursCache(prev => ({
+        ...prev,
+        [cacheKey]: {
+          hours: busy,
+          timestamp: Date.now()
+        }
+      }));
     } catch {
       setBusyHours([]);
+      console.error("Failed to fetch busy hours");
+    } finally {
+      setIsLoadingHours(false);
     }
-  }, []);
+  }, [busyHoursCache, CACHE_EXPIRATION_MS]);
 
   useEffect(() => {
     if (formState.professionalId && formState.date) {
@@ -103,6 +133,16 @@ export const AppoimentForm = () => {
                 status: AppointmentStatus.PENDING
               };
               await AppointmentsService.create(appointmentData);
+              
+              // Clear cache for the relevant date to ensure fresh data
+              const dateStr = values.date.toISOString().split("T")[0];
+              const cacheKey = `${values.professionalId}-${dateStr}`;
+              setBusyHoursCache(prev => {
+                const newCache = { ...prev };
+                delete newCache[cacheKey];
+                return newCache;
+              });
+              
               navigate("/");
             } catch (err) {
               console.error("Appointment creation failed:", err);
@@ -153,26 +193,47 @@ export const AppoimentForm = () => {
                   value={values.date}
                 />
                 {values.professionalId && values.date && (
-                  <div style={{ display: "flex", gap: 8 }}>
-                    {hours
-                      .filter(hour => !busyHours.includes(hour))
-                      .map((hour) => (
-                        <button
-                          key={hour}
-                          style={{
-                            background: values.hour === hour ? "#007bff" : "#eee",
-                            color: values.hour === hour ? "#fff" : "#000",
-                            borderRadius: 4,
-                            padding: "8px 16px",
-                            border: "none",
-                            cursor: "pointer",
-                          }}
-                          onClick={() => setFieldValue("hour", hour)}
-                          type="button"
-                        >
-                          {hour}:00
-                        </button>
-                      ))}
+                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
+                    {isLoadingHours ? (
+                      <div style={{ 
+                        padding: "8px 16px", 
+                        fontStyle: "italic", 
+                        color: "#666" 
+                      }}>
+                        Loading available times...
+                      </div>
+                    ) : (
+                      availableHours.length > 0 ? (
+                        availableHours.map((hour) => (
+                            <button
+                              key={hour}
+                              style={{
+                                background: values.hour === hour ? "#007bff" : "#eee",
+                                color: values.hour === hour ? "#fff" : "#000",
+                                borderRadius: 4,
+                                padding: "8px 16px",
+                                border: "none",
+                                cursor: "pointer",
+                              }}
+                              onClick={() => setFieldValue("hour", hour)}
+                              type="button"
+                            >
+                              {hour}:00
+                            </button>
+                          ))
+                      ) : (
+                        <div style={{ 
+                          padding: "8px 16px", 
+                          fontStyle: "italic", 
+                          color: "#888",
+                          backgroundColor: "#f8f9fa",
+                          borderRadius: 4,
+                          border: "1px solid #e9ecef"
+                        }}>
+                          No available time slots for this date. Please select another date.
+                        </div>
+                      )
+                    )}
                   </div>
                 )}
                 <button type="submit" className={styles.button}>Get Appointment</button>
